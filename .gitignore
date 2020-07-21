@@ -1,0 +1,12 @@
+target/
+**/*.rs.bk
+*.lock
+*.hex
+*.bin
+
+build-script-target
+lorawan-crypto-sys/lorawan-crypto/build
+
+# Ignore Jetbrains IDE
+/.idea
+

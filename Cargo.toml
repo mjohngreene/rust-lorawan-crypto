@@ -1,0 +1,16 @@
+[package]
+name = "lorawan-crypto"
+version = "0.1.0"
+authors = ["lthiery <me@louisthiery.com>"]
+edition = "2018"
+categories = [
+    "embedded",
+    "hardware-support",
+    "no-std",
+]
+license = "Apache 2.0"
+readme = "README.md"
+description = "Rust Wrapper LoRaWAN Crypto"
+
+[dependencies]
+lorawan-crypto-sys = {path = "./lorawan-crypto-sys", version = "0.1.0"}
