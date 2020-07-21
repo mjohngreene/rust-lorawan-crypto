@@ -38,7 +38,8 @@ extern "C" {
 #include <stdint.h>
 
 #if 1
-#  define AES_ENC_PREKEYED  /* AES encryption with a precomputed key schedule  */
+#define AES_ENC_PREKEYED  /* AES encryption with a precomputed key schedule  */
+#define AES_DEC_PREKEYED
 #endif
 #if 0
 #  define AES_DEC_PREKEYED  /* AES decryption with a precomputed key schedule  */

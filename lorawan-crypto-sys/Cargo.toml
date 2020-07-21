@@ -14,4 +14,3 @@ cmake = { git="https://github.com/alexcrichton/cmake-rs.git", rev="7f85e323c7082
 
 [dependencies]
 cty =  "0.2"
-libm = "0.1.4"

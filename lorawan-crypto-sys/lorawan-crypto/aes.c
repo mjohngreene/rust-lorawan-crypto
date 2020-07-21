@@ -303,7 +303,6 @@ uint8_t inv_affine(const uint8_t x)
 #define gfm_e(x)   fe(x)
 
 #endif
-
 #if defined( HAVE_MEMCPY )
 #  define block_copy_nn(d, s, l)    memcpy(d, s, l)
 #  define block_copy(d, s)          memcpy(d, s, N_BLOCK)
