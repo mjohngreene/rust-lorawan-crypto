@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 add_compile_definitions(
-        AES_DEC_PREKEYED HAVE_UINT_32T
+        AES_DEC_PREKEYED
 )
 
 add_library(lorawan-crypto STATIC

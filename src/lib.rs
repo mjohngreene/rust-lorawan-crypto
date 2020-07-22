@@ -1,5 +1,7 @@
+#![no_std]
+
 use generic_array::{
-    typenum::{U16, U256},
+    typenum::U16,
     GenericArray,
 };
 use lorawan_crypto_sys::{
@@ -10,7 +12,7 @@ use lorawan_crypto_sys::{
 };
 use lorawan_encoding::keys::{CryptoFactory, Decrypter, Encrypter, Mac, AES128};
 
-struct EncrypterDecrypter {
+pub struct EncrypterDecrypter {
     key: GenericArray<u8, U16>,
 }
 
@@ -61,7 +63,7 @@ impl Decrypter for EncrypterDecrypter {
     }
 }
 
-struct Cmac {
+pub struct Cmac {
     context: CmacContext,
 }
 
@@ -96,7 +98,11 @@ impl Cmac {
 
 impl Mac for Cmac {
     fn input(&mut self, data: &[u8]) {
-        let mut buffer: GenericArray<u8, U256> = GenericArray::clone_from_slice(data);
+        let mut buffer: [u8;256] = [0; 256];
+
+        for (index, item) in data.iter().enumerate() {
+            buffer[index] = *item;
+        }
 
         unsafe {
             aes_cmac_update(
@@ -111,6 +117,7 @@ impl Mac for Cmac {
             aes_cmac_init(&mut self.context as *mut CmacContext);
         }
     }
+
     fn result(self) -> GenericArray<u8, U16> {
         let mut context = self.context;
         let mut result = GenericArray::default();
@@ -121,7 +128,8 @@ impl Mac for Cmac {
     }
 }
 
-struct LorawanCrypto;
+#[derive(Default)]
+pub struct LorawanCrypto;
 
 impl CryptoFactory for LorawanCrypto {
     type E = EncrypterDecrypter;
@@ -141,16 +149,12 @@ impl CryptoFactory for LorawanCrypto {
     }
 }
 
-// pub trait Mac {
-
-// }
-
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
     use lorawan_encoding::{default_crypto::DefaultFactory, keys::AES128};
-
+    use generic_array::typenum::U256;
     fn get_key() -> AES128 {
         AES128([
             255, 2, 253, 4, 231, 6, 229, 8, 227, 10, 225, 12, 223, 14, 221, 16,
@@ -161,12 +165,7 @@ mod tests {
         GenericArray::clone_from_slice(&[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
     }
 
-    fn get_cmac_step() -> GenericArray<u8, U256> {
-        let mut array = GenericArray::default();
-        array[4] = 5;
-        array[12] = 123;
-        array
-    }
+
 
     #[test]
     fn test_encrypt() {
@@ -204,21 +203,37 @@ mod tests {
         assert_eq!(my_block, control_block);
     }
 
+    fn get_cmac_step1() -> [u8; 34] {
+        let mut ret = [0; 34];
+        ret[5] = 5;
+        ret
+    }
+
+    fn get_cmac_step2()  -> [u8; 14] {
+        let mut ret = [0; 14];
+        ret[3] = 5;
+        ret
+    }
+
     #[test]
     fn test_cmac() {
         let key = get_key();
-        let my_block = {
+        let my_result = {
             let mut mac = LorawanCrypto {}.new_mac(&key);
-            let mut step = get_cmac_step();
+            let mut step = get_cmac_step1();
+            mac.input(&mut step);
+            let mut step = get_cmac_step2();
             mac.input(&mut step);
             mac.result()
         };
-        let control_block = {
+        let control_result = {
             let mut mac = DefaultFactory {}.new_mac(&key);
-            let mut step = get_cmac_step();
+            let mut step = get_cmac_step1();
+            mac.input(&mut step);
+            let mut step = get_cmac_step2();
             mac.input(&mut step);
             mac.result()
         };
-        assert_eq!(my_block, control_block);
+        assert_eq!(my_result, control_result);
     }
 }
