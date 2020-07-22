@@ -154,7 +154,6 @@ mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
     use lorawan_encoding::{default_crypto::DefaultFactory, keys::AES128};
-    use generic_array::typenum::U256;
     fn get_key() -> AES128 {
         AES128([
             255, 2, 253, 4, 231, 6, 229, 8, 227, 10, 225, 12, 223, 14, 221, 16,
