@@ -10,7 +10,7 @@ use lorawan_crypto_sys::{
     AES_CMAC_SetKey as aes_cmac_setkey, AES_CMAC_Update as aes_cmac_update,
     AES_CMAC_CTX as CmacContext,
 };
-use lorawan_encoding::keys::{CryptoFactory, Decrypter, Encrypter, Mac, AES128};
+use lorawan::keys::{CryptoFactory, Decrypter, Encrypter, Mac, AES128};
 
 pub struct EncrypterDecrypter {
     key: GenericArray<u8, U16>,
