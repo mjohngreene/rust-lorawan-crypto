@@ -6,8 +6,6 @@ edition = "2018"
 build = "build.rs"
 
 [build-dependencies]
-cargo-5730 = "0"
-[workaround-build-dependencies]
 bindgen = {version="=0", default-features = false }
 cc = "1"
 cmake = "0"

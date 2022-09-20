@@ -1,4 +1,3 @@
-#[cfg(workaround_build)]
 fn main() {
     use std::env;
     use std::path::PathBuf;
@@ -26,15 +25,15 @@ fn main() {
         .header("lorawan-crypto/cmac.h")
         .trust_clang_mangling(false)
         .rustfmt_bindings(true)
-        .whitelist_type("aes_context")
-        .whitelist_function("aes_set_key")
-        .whitelist_function("aes_encrypt")
-        .whitelist_function("aes_decrypt")
-        .whitelist_type("AES_CMAC_CTX")
-        .whitelist_function("AES_CMAC_Init")
-        .whitelist_function("AES_CMAC_SetKey")
-        .whitelist_function("AES_CMAC_Update")
-        .whitelist_function("AES_CMAC_Final")
+        .allowlist_type("aes_context")
+        .allowlist_function("aes_set_key")
+        .allowlist_function("aes_encrypt")
+        .allowlist_function("aes_decrypt")
+        .allowlist_type("AES_CMAC_CTX")
+        .allowlist_function("AES_CMAC_Init")
+        .allowlist_function("AES_CMAC_SetKey")
+        .allowlist_function("AES_CMAC_Update")
+        .allowlist_function("AES_CMAC_Final")
         .derive_copy(false)
         .derive_debug(false)
         .layout_tests(false)
@@ -45,9 +44,4 @@ fn main() {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
-}
-
-#[cfg(not(workaround_build))]
-fn main() {
-    cargo_5730::run_build_script();
 }
