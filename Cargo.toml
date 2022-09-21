@@ -15,14 +15,7 @@ description = "Rust Wrapper LoRaWAN Crypto"
 [dependencies]
 lorawan-crypto-sys = {path = "./lorawan-crypto-sys", version = "0.1.0"}
 generic-array = "0.14"
+lorawan-encoding = "0.6.2"
 
-[dependencies.lorawan-encoding]
-git = "https://github.com/ivajloip/rust-lorawan.git"
-branch = "master"
-default-features = false
-
-[dev-dependencies.lorawan-encoding]
-git = "https://github.com/ivajloip/rust-lorawan.git"
-branch = "master"
-default-features = false
-features = ["default-crypto"]
+[dev-dependencies]
+lorawan-encoding = "0.6.2"
