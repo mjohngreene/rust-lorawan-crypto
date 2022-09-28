@@ -1,10 +1,8 @@
 fn main() {
     use std::env;
     use std::path::PathBuf;
-    use std::process::Command;
-    use cmake;
     use cmake::Config;
-
+    
     let dst = Config::new("lorawan-crypto")
         .define("BUILD_TESTING", "OFF")
         .define("CMAKE_C_COMPILER_WORKS", "1")

@@ -4,4 +4,17 @@
 #![allow(clippy::all)]
 #![cfg_attr(not(test), no_std)]
 
+#![allow(unused)]
+#![no_main]
+#![no_std]
+
+#![feature(allocator_api)]
+
+use core::panic::PanicInfo;
+
+#[panic_handler]
+fn panic(_panic: &PanicInfo<'_>) -> ! {
+    loop {}
+}
+
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));

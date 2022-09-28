@@ -1,2 +1,2 @@
 [build]
-default-target = "thumbv6m-none-eabi"
+default-target = "thumbv7m-none-eabi"
