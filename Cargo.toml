@@ -15,7 +15,6 @@ description = "Rust Wrapper LoRaWAN Crypto"
 [dependencies]
 lorawan-crypto-sys = { path = "./lorawan-crypto-sys" }
 generic-array = "0"
-bumpalo = { version = "3.11", features = ["allocator_api"] }
 
 [dependencies.lorawan]
 git = "https://github.com/ivajloip/rust-lorawan.git"

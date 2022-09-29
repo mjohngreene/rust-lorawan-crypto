@@ -8,8 +8,6 @@
 #![no_main]
 #![no_std]
 
-#![feature(allocator_api)]
-
 use core::panic::PanicInfo;
 
 #[panic_handler]
